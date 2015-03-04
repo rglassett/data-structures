@@ -1,6 +1,5 @@
 require 'rspec'
 require 'array_list'
-require 'byebug'
 
 describe ArrayList do
   let(:empty_list) { ArrayList.new }
@@ -27,16 +26,16 @@ describe ArrayList do
     end
 
     context "when the index is out of range" do
-      it "returns nil" do
-        expect(empty_list[0]).to be_nil
+      it "raises an error" do
+        expect { empty_list[0] }.to raise_error
       end
     end
   end
 
   describe "#pop" do
     context "when there are no elements in the array" do
-      it "returns nil" do
-        expect(empty_list.pop).to be_nil
+      it "raises an error" do
+        expect { empty_list.pop }.to raise_error
       end
     end
 
@@ -48,7 +47,7 @@ describe ArrayList do
       it "removes the last element in the array" do
         array_list.pop
 
-        expect(array_list[-1]).to eq("foo")
+        expect(array_list[array_list.length - 1]).to eq("foo")
       end
     end
   end
@@ -57,14 +56,14 @@ describe ArrayList do
     it "adds an element to the end of the array" do
       array_list.push("hello world")
 
-      expect(array_list[-1]).to eq("hello world")
+      expect(array_list[array_list.length - 1]).to eq("hello world")
     end
   end
 
   describe "#shift" do
     context "when there are no elements in the array" do
-      it "returns nil" do
-        expect(empty_list.shift).to be_nil
+      it "raises an error" do
+        expect { empty_list.shift }.to raise_error
       end
     end
 

@@ -1,95 +1,72 @@
 require_relative './static_array'
 
 class ArrayList
+  attr_reader :length
+
   def initialize
-    @capacity = 1
-    @logical_size = 0
+    @capacity, @length = 8, 0
     @store = StaticArray.new(@capacity)
   end
 
   def [](idx)
-    @store[logical_index(idx)]
+    check_index(idx)
+    @store[idx]
   end
 
   def []=(idx, value)
-    @store[logical_index(idx)] = value
-  end
-
-  def <<(value)
-    push(value)
-  end
-
-  def length
-    @logical_size
-  end
-
-  def inspect
-    return "[]" if @logical_size == 0
-    result = ""
-    0.upto(@logical_size) do |i|
-      result << @store[i].to_s
-      unless i == @logical_size - 1
-        result << ", "
-      end
-    end
-    "[#{result}]"
-  end
-
-  def push(value)
-    @store[@logical_size] = value
-    @logical_size += 1
-    maybe_resize
+    check_index(idx)
+    @store[idx] = value
   end
 
   def pop
-    popped = @store[@logical_size - 1]
-    @store[@logical_size - 1] = nil
-    @logical_size -= 1
+    raise "index out of bounds" if @length == 0
+
+    popped, @store[length - 1] = @store[@length - 1], nil
+    @length -= 1
+
     popped
   end
 
+  def push(value)
+    @store[@length] = value
+    @length += 1
+    maybe_resize
+  end
+
   def shift
+    raise "index out of bounds" if @length == 0
+
     shifted = @store[0]
-    0.upto(@logical_size) do |i|
-      @store[i] = @store[i + 1]
-    end
-    @store[@logical_size] = nil
-    @logical_size -= 1
+    (1...@length).each { |i| @store[i - 1] = @store[i] }
+    @length -= 1
+
     shifted
   end
 
   def unshift(value)
-    @logical_size.downto(0) do |i|
-      @store[i + 1] = @store[i]
-    end
+    (@length - 1).downto(0) { |i| @store[i + 1] = @store[i] }
+
     @store[0] = value
-    @logical_size += 1
+    @length += 1
+
     maybe_resize
   end
 
   protected
-    def out_of_range?(idx)
-      idx >= @logical_size
-    end
-
-    def logical_index(idx)
-      return idx if idx.abs > @logical_size
-
-      if idx < 0
-        @logical_size + idx
-      else
-        idx
+    def check_index(idx)
+      if idx < 0 || idx >= @length
+        raise "index out of bounds"
       end
     end
 
     def maybe_resize
-      resize if @logical_size == @capacity
+      resize! if @length == @capacity
     end
 
-    def resize
+    def resize!
       @capacity *= 2
       old_store, @store = @store, StaticArray.new(@capacity)
-      0.upto(@logical_size) do |i|
+      0.upto(@length) do |i|
         @store[i] = old_store[i]
       end
     end
