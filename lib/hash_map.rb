@@ -1,9 +1,8 @@
-require_relative './linked_list'
-
 class MyHashMap
   attr_reader :size
 
   def initialize
+    # TODO: implement buckets using linked lists instead of arrays?
     @buckets = [[]]
     @bucket_count = 1
     @size = 0

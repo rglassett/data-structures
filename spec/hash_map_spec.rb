@@ -57,4 +57,26 @@ describe MyHashMap do
       expect(hash.get("goodbye")).to eq("world")
     end
   end
+
+  describe "#keys" do
+    it "returns a list of keys in the hash" do
+      expect(hash.keys).to eq([])
+
+      hash.add("foo", "bar")
+      hash.add("hello", "world")
+
+      expect(hash.keys).to contain_exactly("foo", "hello")
+    end
+  end
+
+  describe "#values" do
+    it "returns a list of values in the hash" do
+      expect(hash.values).to eq([])
+
+      hash.add("foo", "bar")
+      hash.add("hello", "world")
+
+      expect(hash.values).to contain_exactly("foo", "hello")
+    end
+  end
 end
