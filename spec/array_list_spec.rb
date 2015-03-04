@@ -1,13 +1,14 @@
 require 'rspec'
 require 'array_list'
+require 'byebug'
 
 describe ArrayList do
   let(:empty_list) { ArrayList.new }
   let(:array_list) { ArrayList.new }
 
   before(:each) do
-    array_list[0] = "foo"
-    array_list[1] = "bar"
+    array_list.push("foo")
+    array_list.push("bar")
   end
 
   describe "#[] and #[]=" do
@@ -41,7 +42,7 @@ describe ArrayList do
 
     context "when there are multiple elements in the array" do
       it "returns the last element in the array" do
-        expect(array_list.pop).to eq("foo")
+        expect(array_list.pop).to eq("bar")
       end
 
       it "removes the last element in the array" do
@@ -56,7 +57,7 @@ describe ArrayList do
     it "adds an element to the end of the array" do
       array_list.push("hello world")
 
-      expect(array_list[-1]).to eq("hello_world")
+      expect(array_list[-1]).to eq("hello world")
     end
   end
 
@@ -84,7 +85,7 @@ describe ArrayList do
     it "adds an element to the beginning of the array" do
       array_list.unshift("hello world")
 
-      expect(array_list[0]).to eq("hello_world")
+      expect(array_list[0]).to eq("hello world")
     end
   end
 end

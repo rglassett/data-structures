@@ -42,8 +42,8 @@ class ArrayList
   end
 
   def pop
-    popped = @store[@logical_size]
-    @store[@logical_size] = nil
+    popped = @store[@logical_size - 1]
+    @store[@logical_size - 1] = nil
     @logical_size -= 1
     popped
   end
@@ -73,11 +73,12 @@ class ArrayList
     end
 
     def logical_index(idx)
-      if idx >= 0
-        idx % @logical_size
+      return idx if idx.abs > @logical_size
+
+      if idx < 0
+        @logical_size + idx
       else
-        i = (idx * -1) % @logical_size
-        @logical_size - i - 1
+        idx
       end
     end
 
