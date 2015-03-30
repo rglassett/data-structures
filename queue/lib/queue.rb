@@ -14,4 +14,8 @@ class Queue
     raise "Queue is empty" unless @store.first_link
     @store.shift
   end
+
+  def front
+    @store.first_link.value
+  end
 end
