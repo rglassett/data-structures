@@ -1,10 +1,4 @@
-class Link
-  attr_accessor :value, :next
-
-  def initialize(value = nil)
-    @value = value
-  end
-end
+require_relative './single_link'
 
 class LinkedList
   attr_reader :first_link
