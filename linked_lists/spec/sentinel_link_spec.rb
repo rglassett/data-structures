@@ -4,11 +4,9 @@ require 'sentinel_link'
 describe SentinelLink do
   let(:left_sentinel) { SentinelLink.new(:first) }
   let(:right_sentinel) { SentinelLink.new(:last) }
-  let(:link) { Link.new("hello", "world") }
+  let(:link) { DoubleLink.new("hello") }
 
-  it "does not have getters or setters for keys and values" do
-    expect { left_sentinel.key }.to raise_error
-    expect { left_sentinel.key = "hello" }.to raise_error
+  it "does not have a #value getter or setter" do
     expect { left_sentinel.value }.to raise_error
     expect { left_sentinel.value = "hello" }.to raise_error
   end

@@ -2,7 +2,7 @@ require 'rspec'
 require 'doubly_linked_list'
 
 describe DoublyLinkedList do
-  let(:new_list) { LinkedList.new }
+  let(:new_list) { DoublyLinkedList.new }
   let(:first_link) { DoubleLink.new("alpha") }
   let(:second_link) { DoubleLink.new("bravo") }
 
@@ -23,11 +23,11 @@ describe DoublyLinkedList do
       expect(new_list.pop).to eq(second_link.value)
     end
 
-    # it "removes the popped link from the list" do
-    #   new_list.pop
-    #
-    #   expect(new_list["two"]).to be nil
-    # end
+    it "removes the popped link from the list" do
+      link = new_list.pop
+
+      expect(new_list.last).not_to be(link)
+    end
   end
 
   describe "#push" do
@@ -35,8 +35,7 @@ describe DoublyLinkedList do
       new_list.push("charlie")
       link = new_list.last.prev
 
-      expect(link).to be_a(Link)
-      expect(link.key).to eq("three")
+      expect(link).to be_a(DoubleLink)
       expect(link.value).to eq("charlie")
     end
   end
@@ -47,19 +46,18 @@ describe DoublyLinkedList do
     end
 
     it "removes the shifted link from the list" do
-      new_list.shift
+      link = new_list.shift
 
-      expect(new_list["one"]).to be nil
+      expect(new_list.first).not_to be(link)
     end
   end
 
   describe "#unshift" do
     it "adds a link to the beginning of the list" do
-      new_list.unshift("three", "charlie")
+      new_list.unshift("charlie")
       link = new_list.first.next
 
-      expect(link).to be_a(Link)
-      expect(link.key).to eq("three")
+      expect(link).to be_a(DoubleLink)
       expect(link.value).to eq("charlie")
     end
   end

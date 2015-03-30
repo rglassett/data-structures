@@ -1,3 +1,5 @@
+require_relative 'double_link'
+
 class SentinelLink < DoubleLink
   def initialize(side)
     raise "wrong side" unless [:first, :last].include?(side)

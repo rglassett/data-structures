@@ -2,9 +2,9 @@ require 'rspec'
 require 'double_link'
 
 describe DoubleLink do
-  let(:link_one) { Link.new("alpha") }
-  let(:link_two) { Link.new("bravo") }
-  let(:link_three) { Link.new("charlie") }
+  let(:link_one) { DoubleLink.new("alpha") }
+  let(:link_two) { DoubleLink.new("bravo") }
+  let(:link_three) { DoubleLink.new("charlie") }
 
   it "initializes with a value" do
     expect(link_one.value).to eq("alpha")
